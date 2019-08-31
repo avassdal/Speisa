@@ -36,7 +36,7 @@ async def run(loop):
         while True:
             args = await queue.get()
             b = (args)
-            c = b.decode('utf8', errors='ignore')
+            c = b.decode('utf8', errors='ignore')[:-2]
             print (c)
             if c == 100:
                 music.play()
