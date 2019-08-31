@@ -41,10 +41,10 @@ async def run(loop):
             d = c.replace('.', '')
             e = d.rstrip("\\r\\n")
             f = e.rstrip().lstrip()
-            print (f)
+            
 
             if int(f) > int(1000):
-                print ("Yes!")
+                print (f)
                 music.play()
                 
 
