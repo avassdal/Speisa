@@ -41,10 +41,10 @@ async def run(loop):
             d = c.replace('.', '')
             e = d.rstrip("\\r\\n")
             f = e.rstrip().lstrip()
-            
+            print(f)
             try:
-                if int(f) > int(1000):
-                    print (f),
+                if int(f) > int(8000):
+                    print ("Yay!"),
                     music.play()
             except ValueError:
                pass 

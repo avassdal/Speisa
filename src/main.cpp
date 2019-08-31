@@ -17,8 +17,8 @@
 
 #define PIN 6
 #define NUMPIXELS 2
-#define DELAYVAL 1
-#define DELAYEND 1
+#define DELAYVAL 10
+#define DELAYEND 10
 #define LIMIT 30
 #define R 100
 #define G 0
@@ -231,7 +231,8 @@ void unifiedSensorAPIRead(void)
     // Here we're using a moderately bright green color:
     pixels.clear();
     pixels.setPixelColor(i, pixels.Color(R, G, B));
-    ble.println(event.light);
+    ble.print(event.light);
+    ble.println();
     Serial.print(event.light); Serial.println(F(" lux RED"));
     pixels.show();   // Send the updated pixel colors to the hardware.
 
@@ -251,7 +252,8 @@ void unifiedSensorAPIRead(void)
     pixels.setPixelColor(i, pixels.Color(RX, GX, BX));
     pixels.show();   // Send the updated pixel colors to the hardware.
     Serial.print(event.light); Serial.println(F(" lux BLUE"));
-    ble.println(event.light);
+    ble.print(event.light);
+    ble.println();
     delay(DELAYVAL); // Pause before next pass through loop
     }
   }
