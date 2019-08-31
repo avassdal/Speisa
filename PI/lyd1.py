@@ -44,7 +44,7 @@ async def run(loop):
             
 
             if int(f) > int(1000):
-                print (f)
+                print (f),
                 music.play()
                 
 
