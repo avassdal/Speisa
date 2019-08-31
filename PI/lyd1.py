@@ -42,7 +42,7 @@ async def run(loop):
             e = d.rstrip("\\r\\n")
             print (e.rstrip().lstrip())
 
-            if int(d) < int(100):
+            if int(e) < int(100):
                 print ("Yes!")
                 music.play()
                 
