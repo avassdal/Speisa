@@ -43,7 +43,7 @@ async def run(loop):
             f = e.rstrip().lstrip()
             print (f)
 
-            if int(e) > int(1000):
+            if int(f) > int(1000):
                 print ("Yes!")
                 music.play()
                 
