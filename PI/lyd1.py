@@ -39,7 +39,7 @@ async def run(loop):
             b = (args)
             c = b.decode('utf8', errors='ignore')[:-2]
             d = c.replace('.', '')
-            e = d.rstrip()
+            e = d.rstrip('\r\n')
             print (e)
             if int(d) < int(100):
                 print ("Yes!")
