@@ -6,14 +6,14 @@
 #include <Adafruit_Sensor.h>
 #include <Adafruit_TSL2591.h>
 #include <Adafruit_NeoPixel.h>
-#include "Adafruit_BLE.h"
-#include "Adafruit_BluefruitLE_SPI.h"
-#include "Adafruit_BluefruitLE_UART.h"
+#include <Adafruit_BLE.h>
+#include <Adafruit_BluefruitLE_SPI.h>
+#include <Adafruit_BluefruitLE_UART.h>
 #if SOFTWARE_SERIAL_AVAILABLE
   #include <SoftwareSerial.h>
 #endif
 
-#include "BluefruitConfig.h"
+#include <BluefruitConfig.h>
 
 #define PIN 6
 #define NUMPIXELS 2
@@ -28,6 +28,9 @@
 #define GX 0
 #define BX 255
 
+#define FACTORYRESET_ENABLE         0
+#define MINIMUM_FIRMWARE_VERSION    "0.6.6"
+#define MODE_LED_BEHAVIOUR          "MODE"
 // Example for demonstrating the TSL2591 library - public domain!
 
 // connect SCL to SCL
@@ -36,6 +39,15 @@
 // connect GROUND to GND
 Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 Adafruit_TSL2591 tsl = Adafruit_TSL2591(2591); // pass in a number for the sensor identifier (for your use later)
+
+/* ...hardware SPI, using SCK/MOSI/MISO hardware SPI pins and then user selected CS/IRQ/RST */
+Adafruit_BluefruitLE_SPI ble(BLUEFRUIT_SPI_CS, BLUEFRUIT_SPI_IRQ, BLUEFRUIT_SPI_RST);
+
+// A small helper
+void error(const __FlashStringHelper*err) {
+  Serial.println(err);
+  while (1);
+}
 
 
 /**************************************************************************/
@@ -131,14 +143,67 @@ void setup(void)
     
   /* Display some basic information on this sensor */
   displaySensorDetails();
-  
+
   /* Configure the sensor */
   configureSensor();
   pixels.begin();
 
+/* Initialise the ble module */
+  Serial.print(F("Initialising the Bluefruit LE module: "));
+
+  if ( !ble.begin(VERBOSE_MODE) )
+  {
+    error(F("Couldn't find Bluefruit, make sure it's in CoMmanD mode & check wiring?"));
+  }
+  Serial.println( F("OK!") );
+
+  if ( FACTORYRESET_ENABLE )
+  {
+    /* Perform a factory reset to make sure everything is in a known state */
+    Serial.println(F("Performing a factory reset: "));
+    if ( ! ble.factoryReset() ){
+      error(F("Couldn't factory reset"));
+    }
+  }
+
+  /* Disable command echo from Bluefruit */
+  ble.echo(false);
+
+  Serial.println("Requesting Bluefruit info:");
+  /* Print Bluefruit information */
+  ble.info();
+
+  Serial.println(F("Please use Adafruit Bluefruit LE app to connect in UART mode"));
+  Serial.println(F("Then Enter characters to send to Bluefruit"));
+  Serial.println();
+
+  ble.verbose(false);  // debug info is a little annoying after this point!
+
+  /* Wait for connection */
+  while (! ble.isConnected()) {
+      delay(500);
+  }
+
+  Serial.println(F("******************************"));
+
+  // LED Activity command is only supported from 0.6.6
+  if ( ble.isVersionAtLeast(MINIMUM_FIRMWARE_VERSION) )
+  {
+    // Change Mode LED Activity
+    Serial.println(F("Change LED activity to " MODE_LED_BEHAVIOUR));
+    ble.sendCommandCheckOK("AT+HWModeLED=" MODE_LED_BEHAVIOUR);
+  }
+
+  // Set module to DATA mode
+  Serial.println( F("Switching to DATA mode!") );
+  ble.setMode(BLUEFRUIT_MODE_DATA);
+
+  Serial.println(F("******************************"));
   
 
   // Now we're ready to get readings ... move on to loop()!
+
+  
 }
 
 
@@ -166,6 +231,7 @@ void unifiedSensorAPIRead(void)
     // Here we're using a moderately bright green color:
     pixels.clear();
     pixels.setPixelColor(i, pixels.Color(R, G, B));
+    ble.println(event.light);
     Serial.print(event.light); Serial.println(F(" lux RED"));
     pixels.show();   // Send the updated pixel colors to the hardware.
 
@@ -185,6 +251,7 @@ void unifiedSensorAPIRead(void)
     pixels.setPixelColor(i, pixels.Color(RX, GX, BX));
     pixels.show();   // Send the updated pixel colors to the hardware.
     Serial.print(event.light); Serial.println(F(" lux BLUE"));
+    ble.println(event.light);
     delay(DELAYVAL); // Pause before next pass through loop
     }
   }
