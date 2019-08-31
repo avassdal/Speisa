@@ -43,7 +43,7 @@ async def run(loop):
             f = e.rstrip().lstrip()
             print(f)
             try:
-                if int(f) > int(8000):
+                if int(f) > int(2000):
                     print ("Yay!"),
                     music.play()
                     sleep(1.8)
