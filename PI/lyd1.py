@@ -38,7 +38,7 @@ async def run(loop):
             b = (args)
             c = b.decode('utf8', errors='ignore')[:-2]
             print (c)
-            if int(c) < int(100):
+            if float(c) < float(100):
                 print ("Yes!")
                 music.play()
 
