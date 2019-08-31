@@ -1,5 +1,6 @@
 import asyncio
 from datetime import time
+from idlelib import rstrip
 from signal import pause
 from time import sleep
 
@@ -38,7 +39,8 @@ async def run(loop):
             b = (args)
             c = b.decode('utf8', errors='ignore')[:-2]
             d = c.replace('.', '')
-            print (d)
+            e = d.rstrip()
+            print (e)
             if int(d) < int(100):
                 print ("Yes!")
                 music.play()
