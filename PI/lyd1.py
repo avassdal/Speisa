@@ -37,7 +37,7 @@ async def run(loop):
         while True:
             args = await queue.get()
             b = (args)
-            c = b.decode('utf8', errors='ignore')[:-2]
+            c = b.decode('utf8')[:-2]
             d = c.replace('.', '')
             e = d.rstrip('\r\n')
             print (e)
