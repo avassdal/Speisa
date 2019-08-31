@@ -1,8 +1,10 @@
 import asyncio
-from bleak import discover, BleakClient
-import pygame
+from datetime import time
 from signal import pause
 from time import sleep
+
+import pygame
+from bleak import BleakClient, discover
 
 serviceUuid = '6e400001-b5a3-f393-e0a9-e50e24dcca9e';
 characteristicUuid = '6e400003-b5a3-f393-e0a9-e50e24dcca9e';
