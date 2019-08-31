@@ -25,7 +25,7 @@ async def run(loop):
 
 
     async with BleakClient(device.address, loop=loop) as client:
-        queue = asyncio.Queue()
+        queue = asyncio.Queue(maxsize=2)
         print('connecting...');
         await client.connect()
         print('starting notificiations');
