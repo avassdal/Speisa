@@ -36,7 +36,7 @@ async def run(loop):
             b = (args)
             c = b.decode('utf8', errors='ignore')
             print (c)
-            if c > 100: 
+            if c > 100:
                 music.play()
 
         # await client.stop_notify(characteristicUuid)

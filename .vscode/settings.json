@@ -2,5 +2,6 @@
     "terminal.integrated.env.osx": {
         "PATH": "/Users/avassdal/.platformio/penv/bin:/Users/avassdal/.platformio/penv:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/share/dotnet:/Library/Frameworks/Mono.framework/Versions/Current/Commands",
         "PLATFORMIO_CALLER": "vscode"
-    }
+    },
+    "python.pythonPath": "/usr/local/bin/python3"
 }
