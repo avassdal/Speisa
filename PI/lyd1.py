@@ -39,8 +39,7 @@ async def run(loop):
             b = (args)
             c = b.decode('utf8')[:-2]
             d = c.replace('.', '')
-            e = d.rstrip('\r\n')
-            print (e)
+            print (d.rstrip().lstrip())
             if int(d) < int(100):
                 print ("Yes!")
                 music.play()
