@@ -43,13 +43,13 @@ async def run(loop):
             f = e.rstrip().lstrip()
             print(f)
             try:
-                if int(f) > int(2000):
+                if int(f) > int(500):
                     print ("Yay!"),
-                    music.play()
-                    sleep(1.8)
+                    music.play()   
+                
             except ValueError:
                pass 
-
+            sleep(0.001)
         # await client.stop_notify(characteristicUuid)
 
 
