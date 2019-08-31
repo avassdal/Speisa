@@ -37,10 +37,12 @@ async def run(loop):
             args = await queue.get()
             b = (args)
             c = b.decode('utf8', errors='ignore')[:-2]
-            print (c)
-            if float(c) < float(100):
+            d = c.replace('.', '')
+            print (d)
+            if int(c) < int(100):
                 print ("Yes!")
                 music.play()
+                
 
         # await client.stop_notify(characteristicUuid)
 
