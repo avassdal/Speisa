@@ -46,6 +46,7 @@ async def run(loop):
                 if int(f) > int(8000):
                     print ("Yay!"),
                     music.play()
+                    sleep(1.8)
             except ValueError:
                pass 
 
