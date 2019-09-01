@@ -44,12 +44,12 @@ async def run(loop):
             music.play()
             sleep(1.8)  
             
-
                 
             if ValueError:
                pass 
-        
-        # await client.stop_notify(characteristicUuid)
+            if KeyboardInterrupt:
+                await client.stop_notify(characteristicUuid)
+                loop.close()
 
 
 if __name__ == '__main__':
