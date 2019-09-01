@@ -46,9 +46,10 @@ async def run(loop):
             d = c.replace('.', '')
             e = d.rstrip("\\r\\n")
             f = e.rstrip().lstrip()
-            
-            print(f)
             music.play()
+            print(f)
+        
+        while pygame.mixer.music.get_busy():
             sleep(1.8)  
             
                 
