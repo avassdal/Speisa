@@ -44,13 +44,13 @@ async def run(loop):
             
             print(f)
             music.play()
-            sleep(2)  
+            sleep(1.8)  
             
 
                 
             if ValueError:
                pass 
-            sleep(0.001)
+        
         # await client.stop_notify(characteristicUuid)
 
 
