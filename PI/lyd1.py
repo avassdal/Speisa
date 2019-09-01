@@ -26,8 +26,11 @@ async def run(loop):
 
     async with BleakClient(device.address, loop=loop) as client:
         queue = asyncio.LifoQueue(maxsize=1)
+        print('disconnecting...');
+        await client.disconnect()
         print('connecting...');
         await client.connect()
+        
         print('starting notificiations');
         def callback(sender, data):
           print(f"{sender}: {data}")
