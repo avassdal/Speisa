@@ -49,8 +49,7 @@ async def run(loop):
             music.play()
             print(f)
         
-        while pygame.mixer.music.get_busy():
-            sleep(1.8)  
+        while pygame.mixer.get_busy(): 
             
                 
             if ValueError:
