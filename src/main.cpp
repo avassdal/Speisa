@@ -19,8 +19,8 @@
 #define NUMPIXELS 2
 #define DELAYVAL 10
 #define DELAYEND 10
-#define LIMIT 30
-#define R 40
+#define LIMIT 300
+#define R 50
 #define G 40
 #define B 40
 
@@ -37,7 +37,7 @@
 // connect SDA to SDA
 // connect Vin to 3.3V
 // connect GROUND to GND
-Adafruit_NeoPixel pixels(NUMPIXELS, PIN,   + NEO_KHZ800);
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(2, PIN, NEO_GRB + NEO_KHZ800);
 Adafruit_TSL2591 tsl = Adafruit_TSL2591(2591); // pass in a number for the sensor identifier (for your use later)
 
 /* ...hardware SPI, using SCK/MOSI/MISO hardware SPI pins and then user selected CS/IRQ/RST */
@@ -127,6 +127,8 @@ void configureSensor(void)
 /**************************************************************************/
 void setup(void) 
 {
+  strip.begin();
+  strip.show();
   Serial.begin(9600);
   
   Serial.println(F("Starting Adafruit TSL2591 Test!"));
@@ -146,7 +148,7 @@ void setup(void)
 
   /* Configure the sensor */
   configureSensor();
-  pixels.begin();
+  strip.begin();
 
 /* Initialise the ble module */
   Serial.print(F("Initialising the Bluefruit LE module: "));
@@ -212,7 +214,38 @@ void setup(void)
     Performs a read using the Adafruit Unified Sensor API.
 */
 /**************************************************************************/
+void brighten() {
+    uint16_t i, j;
+  
+    for (j = 0; j < 255; j+=2) {
+      for (i = 0; i < strip.numPixels(); i++) {
+        strip.setPixelColor(i, j, j, j);
+      }
+      strip.show();
+      delay(1);
+    }
+    //delay(1500);
+  }
+  
+  // 255 to 0
+
+  void darken() {
+    Serial.begin(9600);
+    uint16_t i, j;
+  
+    for (j = 255; j > 40; j--) {
+      for (i = 0; i < strip.numPixels(); i++) {
+        strip.setPixelColor(i, j, j, j);
+      }
+      strip.show();
+      delay(5);
+      Serial.println(j);
+    }
+    delay(1500);
+  }
+
 void unifiedSensorAPIRead(void)
+
 {
   /* Get a new sensor event */ 
   sensors_event_t event;
@@ -220,6 +253,7 @@ void unifiedSensorAPIRead(void)
  
   /* Display the results (light is measured in lux) */
   Serial.print(F("[ ")); Serial.print(event.timestamp); Serial.print(F(" ms ] "));
+  
   if ((event.light < LIMIT))
   {
     /* If event.light = 0 lux the sensor is probably saturated */
@@ -228,11 +262,11 @@ void unifiedSensorAPIRead(void)
     for(int i=0; i<NUMPIXELS; i++) { // For each pixel...
 
     // pixels.Color() takes RGB values, from 0,0,0 up to 255,255,255
-    pixels.setPixelColor(i, pixels.Color(R, G, B));
-    ble.print(event.light);
-    ble.println();
+    strip.setPixelColor(i, strip.Color(R, G, B));
+    /*ble.print(event.light);*/
+    /*ble.println();*/
     Serial.print(event.light); Serial.println(F(" lux RED"));
-    pixels.show();   // Send the updated pixel colors to the hardware.
+    strip.show();   // Send the updated pixel colors to the hardware.
 
     delay(DELAYVAL); // Pause before next pass through loop
     }
@@ -246,8 +280,8 @@ void unifiedSensorAPIRead(void)
 
     // pixels.Color() takes RGB values, from 0,0,0 up to 255,255,255
     
-    pixels.setPixelColor(i, pixels.Color(RX, GX, BX));
-    pixels.show();   // Send the updated pixel colors to the hardware.
+    strip.setPixelColor(i, strip.Color(RX, GX, BX));
+    strip.show();   // Send the updated pixel colors to the hardware.
     Serial.print(event.light); Serial.println(F(" lux BLUE"));
     ble.print(event.light);
     ble.println();
@@ -265,8 +299,17 @@ void unifiedSensorAPIRead(void)
 /**************************************************************************/
 void loop(void) 
 { 
+  /* Get a new sensor event */ 
+  sensors_event_t event;
+  tsl.getEvent(&event);
+
   //simpleRead(); 
   unifiedSensorAPIRead();
-  
-  delay(DELAYEND);
+  if ((event.light > LIMIT)){
+    brighten();
+    darken();}
+  else
+  {
+    delay(DELAYEND);
+  }
 }

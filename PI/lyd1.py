@@ -21,7 +21,7 @@ async def run(loop):
     print('looking for devices...')
     while device is None:
         devices = await discover()
-        device = next((d for d in devices if d.name == 'Adafruit Bluefruit LE'), None)
+        device = next((d for d in devices if d.name == 'SpeisaBT'), None)
 
 
     async with BleakClient(device.address, loop=loop) as client:
@@ -42,13 +42,12 @@ async def run(loop):
             e = d.rstrip("\\r\\n")
             f = e.rstrip().lstrip()
             print(f)
-            try:
-                if int(f) > int(500):
-                    print ("Yay!"),
-                    music.play()  
-                     
+            music.play()
+            sleep(2)  
+            
+
                 
-            except ValueError:
+            if ValueError:
                pass 
             sleep(0.001)
         # await client.stop_notify(characteristicUuid)
