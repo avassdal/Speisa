@@ -17,10 +17,10 @@
 
 #define PIN 6
 #define NUMPIXELS 2
-#define DELAYVAL 10
-#define DELAYEND 10
-#define LIMIT 300
-#define R 50
+#define DELAYVAL 0
+#define DELAYEND 0
+#define LIMIT 30
+#define R 40
 #define G 40
 #define B 40
 
@@ -230,7 +230,6 @@ void brighten() {
   // 255 to 0
 
   void darken() {
-    Serial.begin(9600);
     uint16_t i, j;
   
     for (j = 255; j > 40; j--) {
@@ -239,9 +238,8 @@ void brighten() {
       }
       strip.show();
       delay(5);
-      Serial.println(j);
     }
-    delay(1500);
+    /*delay(1500);*/
   }
 
 void unifiedSensorAPIRead(void)
@@ -252,7 +250,7 @@ void unifiedSensorAPIRead(void)
   tsl.getEvent(&event);
  
   /* Display the results (light is measured in lux) */
-  Serial.print(F("[ ")); Serial.print(event.timestamp); Serial.print(F(" ms ] "));
+  /* Serial.print(F("[ ")); Serial.print(event.timestamp); Serial.print(F(" ms ] ")); */
   
   if ((event.light < LIMIT))
   {
@@ -265,28 +263,13 @@ void unifiedSensorAPIRead(void)
     strip.setPixelColor(i, strip.Color(R, G, B));
     /*ble.print(event.light);*/
     /*ble.println();*/
-    Serial.print(event.light); Serial.println(F(" lux RED"));
+    /*Serial.print(event.light); Serial.println(F(" lux RED"));*/
     strip.show();   // Send the updated pixel colors to the hardware.
 
     delay(DELAYVAL); // Pause before next pass through loop
     }
-  }
-  else
-  {
-    /* If event.light = 0 lux the sensor is probably saturated */
-    /* and no reliable data could be generated! */
-    /* if event.light is +/- 4294967040 there was a float over/underflow */
-    for(int i=0; i<NUMPIXELS; i++) { // For each pixel...
-
-    // pixels.Color() takes RGB values, from 0,0,0 up to 255,255,255
+  
     
-    strip.setPixelColor(i, strip.Color(RX, GX, BX));
-    strip.show();   // Send the updated pixel colors to the hardware.
-    Serial.print(event.light); Serial.println(F(" lux BLUE"));
-    ble.print(event.light);
-    ble.println();
-    delay(DELAYVAL); // Pause before next pass through loop
-    }
   }
 }
 
@@ -306,6 +289,7 @@ void loop(void)
   //simpleRead(); 
   unifiedSensorAPIRead();
   if ((event.light > LIMIT)){
+    ble.print(event.light);
     brighten();
     darken();}
   else
