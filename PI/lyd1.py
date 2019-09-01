@@ -45,7 +45,8 @@ async def run(loop):
             try:
                 if int(f) > int(500):
                     print ("Yay!"),
-                    music.play()   
+                    music.play()  
+                     
                 
             except ValueError:
                pass 

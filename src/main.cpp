@@ -20,24 +20,24 @@
 #define DELAYVAL 10
 #define DELAYEND 10
 #define LIMIT 30
-#define R 100
-#define G 0
-#define B 0
+#define R 40
+#define G 40
+#define B 40
 
-#define RX 0
-#define GX 0
-#define BX 255
+#define RX 100
+#define GX 100
+#define BX 100
 
 #define FACTORYRESET_ENABLE         0
 #define MINIMUM_FIRMWARE_VERSION    "0.6.6"
-#define MODE_LED_BEHAVIOUR          "MODE"
+#define MODE_LED_BEHAVIOUR          "DISABLE"
 // Example for demonstrating the TSL2591 library - public domain!
 
 // connect SCL to SCL
 // connect SDA to SDA
 // connect Vin to 3.3V
 // connect GROUND to GND
-Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel pixels(NUMPIXELS, PIN,   + NEO_KHZ800);
 Adafruit_TSL2591 tsl = Adafruit_TSL2591(2591); // pass in a number for the sensor identifier (for your use later)
 
 /* ...hardware SPI, using SCK/MOSI/MISO hardware SPI pins and then user selected CS/IRQ/RST */
@@ -228,8 +228,6 @@ void unifiedSensorAPIRead(void)
     for(int i=0; i<NUMPIXELS; i++) { // For each pixel...
 
     // pixels.Color() takes RGB values, from 0,0,0 up to 255,255,255
-    // Here we're using a moderately bright green color:
-    pixels.clear();
     pixels.setPixelColor(i, pixels.Color(R, G, B));
     ble.print(event.light);
     ble.println();
@@ -247,8 +245,7 @@ void unifiedSensorAPIRead(void)
     for(int i=0; i<NUMPIXELS; i++) { // For each pixel...
 
     // pixels.Color() takes RGB values, from 0,0,0 up to 255,255,255
-    // Here we're using a moderately bright green color:
-    pixels.clear();
+    
     pixels.setPixelColor(i, pixels.Color(RX, GX, BX));
     pixels.show();   // Send the updated pixel colors to the hardware.
     Serial.print(event.light); Serial.println(F(" lux BLUE"));
