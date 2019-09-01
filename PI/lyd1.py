@@ -41,21 +41,8 @@ async def run(loop):
         print('waiting')
         while True:
             args = await queue.get()
-            b = (args)
-            c = b.decode('utf8')[:-2]
-            d = c.replace('.', '')
-            e = d.rstrip("\\r\\n")
-            f = e.rstrip().lstrip()
             music.play()
-            print(f)
-        
-        while pygame.mixer.get_busy(): 
-            
-                
-            if ValueError:
-               pass 
-        if KeyboardInterrupt:
-            await client.stop_notify(characteristicUuid)
+            print(args)
 
 
 if __name__ == '__main__':
