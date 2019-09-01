@@ -26,7 +26,7 @@ async def run(loop):
         device = next((d for d in devices if d.name == 'SpeisaBT'), None)
 
 
-    async with BleakClient(bleaddress, loop=loop) as client:
+    async with BleakClient(device.address, loop=loop) as client:
         queue = asyncio.LifoQueue(maxsize=1)
         print('disconnecting...');
         await client.disconnect()
@@ -54,14 +54,13 @@ async def run(loop):
                 
             if ValueError:
                pass 
-            if KeyboardInterrupt:
-                await client.stop_notify(characteristicUuid)
-                loop.close()
+        if KeyboardInterrupt:
+            await client.stop_notify(characteristicUuid)
 
 
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
-
+    
     try:
         loop.run_until_complete(run(loop))
     except KeyboardInterrupt:
