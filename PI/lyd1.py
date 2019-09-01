@@ -14,17 +14,12 @@ pygame.mixer.pre_init(44100, -16, 1, 512)
 pygame.mixer.init()
 pygame.init()
 music=pygame.mixer.Sound("lyd1.ogg")
+bleaddress='CB:C1:7E:4B:03:72'
 
 async def run(loop):
     device = None
 
-    print('looking for devices...')
-    while device is None:
-        devices = await discover()
-        device = next((d for d in devices if d.name == 'SpeisaBT'), None)
-
-
-    async with BleakClient(device.address, loop=loop) as client:
+    async with BleakClient(bleaddress, loop=loop) as client:
         queue = asyncio.LifoQueue(maxsize=1)
         print('disconnecting...');
         await client.disconnect()
