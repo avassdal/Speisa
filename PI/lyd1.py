@@ -25,7 +25,7 @@ async def run(loop):
 
 
     async with BleakClient(device.address, loop=loop) as client:
-        queue = asyncio.Queue(maxsize=2)
+        queue = asyncio.LifoQueue(maxsize=1)
         print('connecting...');
         await client.connect()
         print('starting notificiations');
@@ -41,6 +41,7 @@ async def run(loop):
             d = c.replace('.', '')
             e = d.rstrip("\\r\\n")
             f = e.rstrip().lstrip()
+            
             print(f)
             music.play()
             sleep(2)  
