@@ -15,14 +15,19 @@
 #define NUMPIXELS 2
 #define DELAYVAL 0
 #define DELAYEND 0
-#define LIMIT 5000
-#define R 20
-#define G 20
-#define B 20
 
-#define RX 50
-#define GX 50
-#define BX 50
+// Relevante verdier:
+
+#define LIMIT 6000 //triggerpunkt for lyssensor
+#define R 40    //Rødt lys ved mørke
+#define G 40    //Grønt lys ved mørke
+#define B 40    //Blått lys ved mørke
+
+#define RX 100    //Rød lysstyrke ved lys/lyd
+#define GX 100    //Grønn lysstyrke ved lys/lyd
+#define BX 100    //Blå lysstyrke ved lys/lyd
+
+//
 
 #define FACTORYRESET_ENABLE         0
 #define MINIMUM_FIRMWARE_VERSION    "0.6.6"
