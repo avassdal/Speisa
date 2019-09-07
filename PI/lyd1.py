@@ -9,9 +9,9 @@ from time import sleep
 import pygame
 from bleak import BleakClient, discover
 
-bleaddress='CB:C1:7E:4B:03:72';
-serviceUuid = '6e400001-b5a3-f393-e0a9-e50e24dcca9e';
-characteristicUuid = '6e400003-b5a3-f393-e0a9-e50e24dcca9e';
+bleaddress='CB:C1:7E:4B:03:72'
+serviceUuid = '6e400001-b5a3-f393-e0a9-e50e24dcca9e'
+characteristicUuid = '6e400003-b5a3-f393-e0a9-e50e24dcca9e'
 
 pygame.mixer.pre_init(44100, -16, 1, 512)
 pygame.mixer.init()

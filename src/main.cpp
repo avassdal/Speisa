@@ -15,14 +15,14 @@
 #define NUMPIXELS 2
 #define DELAYVAL 0
 #define DELAYEND 0
-#define LIMIT 1000
-#define R 40
-#define G 40
-#define B 40
+#define LIMIT 5000
+#define R 20
+#define G 20
+#define B 20
 
-#define RX 100
-#define GX 100
-#define BX 100
+#define RX 50
+#define GX 50
+#define BX 50
 
 #define FACTORYRESET_ENABLE         0
 #define MINIMUM_FIRMWARE_VERSION    "0.6.6"
@@ -171,9 +171,9 @@ void unifiedSensorAPIRead(void)
 {
   Serial.begin(9600);
   unsigned int red = RGB_sensor.readRed();
-  Serial.print("Red: "); Serial.println(red,DEC);
+  Serial.print("Red: "); Serial.println(red);
 
-  if ((red,DEC > LIMIT))
+  if ((red < LIMIT))
   {
     /* If event.light = 0 lux the sensor is probably saturated */
     /* and no reliable data could be generated! */
@@ -206,9 +206,8 @@ void loop(void)
   unsigned int red = RGB_sensor.readRed();
 
   unifiedSensorAPIRead();
-  if ((red,DEC > LIMIT)){
-    ble.println(red,DEC);
-    Serial.print("Red: "); Serial.println(red,DEC);
+  if ((red > LIMIT)){
+    ble.println(red);
     brighten();
     darken();}
   else
