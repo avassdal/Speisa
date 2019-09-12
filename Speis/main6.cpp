@@ -22,6 +22,7 @@
 #define R 40    //Rødt lys ved mørke
 #define G 40    //Grønt lys ved mørke
 #define B 40    //Blått lys ved mørke
+#define W 40
 
 #define RX 100    //Rød lysstyrke ved lys/lyd
 #define GX 100    //Grønn lysstyrke ved lys/lyd
@@ -142,33 +143,148 @@ void setup(void)
     Performs a read using the Adafruit Unified Sensor API.
 */
 /**************************************************************************/
-void brighten() {
-    uint16_t i, j;
-  
-    for (j = 0; j < 255; j+=2) {
-      for (i = 0; i < strip.numPixels(); i++) {
-        strip.setPixelColor(i, j, j, j);
-      }
-      strip.show();
-      delay(1);
-    }
-    //delay(1500);
-  }
-  
-  // 255 to 0
+// 0 to 255
+void brighten1() {
+  uint16_t i, j;
 
-  void darken() {
-    uint16_t i, j;
-  
-    for (j = 255; j > 40; j--) {
-      for (i = 0; i < strip.numPixels(); i++) {
-        strip.setPixelColor(i, j, j, j);
-      }
-      strip.show();
-      delay(5);
+  for (j = 0; j < 255; j+=20) {
+    for (i = 0; i < strip.numPixels(); i++) {
+      strip.setPixelColor(i, j, j, j, j);
     }
-    /*delay(1500);*/
+    strip.show();
+    delay(1);
   }
+  //delay(1500);
+}
+
+// 255 to 0
+void darken1() {
+  
+  uint16_t i, j;
+
+  for (j = 255; j > 0; j=j-3) {
+    for (i = 0; i < strip.numPixels(); i++) {
+      strip.setPixelColor(i, j, j, j, j);
+    }
+    strip.show();
+    delay(1);
+    
+  }
+  delay(1);
+
+  // 0 to 255
+}
+void brighten2() {
+  uint16_t i, j;
+
+  for (j = 0; j < 255; j+=20) {
+    for (i = 0; i < strip.numPixels(); i++) {
+      strip.setPixelColor(i, j, j, j, j);
+    }
+    strip.show();
+    delay(1);
+  }
+  //delay(1500);
+}
+
+// 255 to 0
+void darken2() {
+  
+  uint16_t i, j;
+
+  for (j = 255; j > 0; j=j-3) {
+    for (i = 0; i < strip.numPixels(); i++) {
+      strip.setPixelColor(i, j, j, j, j);
+    }
+    strip.show();
+    delay(1);
+    
+  }
+  delay(1);
+}
+void brighten3() {
+  uint16_t i, j;
+
+  for (j = 0; j < 255; j+=20) {
+    for (i = 0; i < strip.numPixels(); i++) {
+      strip.setPixelColor(i, j, j, j, j);
+    }
+    strip.show();
+    delay(1);
+  }
+  //delay(1500);
+}
+
+// 255 to 0
+void darken3() {
+  
+  uint16_t i, j;
+
+  for (j = 255; j > 0; j=j-3) {
+    for (i = 0; i < strip.numPixels(); i++) {
+      strip.setPixelColor(i, j, j, j, j);
+    }
+    strip.show();
+    delay(1);
+    
+  }
+  delay(1);
+}
+void brighten4() {
+  uint16_t i, j;
+
+  for (j = 0; j < 255; j+=20) {
+    for (i = 0; i < strip.numPixels(); i++) {
+      strip.setPixelColor(i, j, j, j, j);
+    }
+    strip.show();
+    delay(1);
+  }
+  //delay(1500);
+}
+
+// 255 to 0
+void darken4() {
+  
+  uint16_t i, j;
+
+  for (j = 255; j > 0; j=j-3) {
+    for (i = 0; i < strip.numPixels(); i++) {
+      strip.setPixelColor(i, j, j, j, j);
+    }
+    strip.show();
+    delay(1);
+    
+  }
+  delay(1);  
+}
+void brighten5() {
+  uint16_t i, j;
+
+  for (j = 0; j < 255; j+=20) {
+    for (i = 0; i < strip.numPixels(); i++) {
+      strip.setPixelColor(i, j, j, j, j);
+    }
+    strip.show();
+    delay(1);
+  }
+  //delay(1500);
+}
+
+// 255 to 0
+void darken5() {
+  
+  uint16_t i, j;
+
+  for (j = 255; j > 0; j--) {
+    for (i = W; i < strip.numPixels(); i++) {
+      strip.setPixelColor(i, j, j, j, j);
+    }
+    strip.show();
+    delay(2);
+  }
+  // delay(2000);  
+}
 
 void unifiedSensorAPIRead(void)
 
@@ -186,7 +302,7 @@ void unifiedSensorAPIRead(void)
     for(int i=0; i<NUMPIXELS; i++) { // For each pixel...
 
     // pixels.Color() takes RGB values, from 0,0,0 up to 255,255,255
-    strip.setPixelColor(i, strip.Color(R, G, B));
+    strip.setPixelColor(i, strip.Color(R, G, B, W));
     /*ble.print(event.light);*/
     /*ble.println();*/
     /*Serial.print(event.light); Serial.println(F(" lux RED"));*/
@@ -213,8 +329,17 @@ void loop(void)
   unifiedSensorAPIRead();
   if ((red > LIMIT)){
     ble.println(red);
-    brighten();
-    darken();}
+    brighten1();
+    darken1();
+    brighten2();
+    darken2();
+    brighten3();
+    darken3();
+    brighten4();
+    darken4();
+    brighten5();
+    darken5();
+  }
   else
   {
     delay(DELAYEND);

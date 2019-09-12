@@ -22,6 +22,7 @@
 #define R 40    //Rødt lys ved mørke
 #define G 40    //Grønt lys ved mørke
 #define B 40    //Blått lys ved mørke
+#define W 40
 
 #define RX 100    //Rød lysstyrke ved lys/lyd
 #define GX 100    //Grønn lysstyrke ved lys/lyd
@@ -142,33 +143,33 @@ void setup(void)
     Performs a read using the Adafruit Unified Sensor API.
 */
 /**************************************************************************/
+// 0 to 255
 void brighten() {
-    uint16_t i, j;
-  
-    for (j = 0; j < 255; j+=2) {
-      for (i = 0; i < strip.numPixels(); i++) {
-        strip.setPixelColor(i, j, j, j);
-      }
-      strip.show();
-      delay(1);
-    }
-    //delay(1500);
-  }
-  
-  // 255 to 0
+  uint16_t i, j;
 
-  void darken() {
-    uint16_t i, j;
-  
-    for (j = 255; j > 40; j--) {
-      for (i = 0; i < strip.numPixels(); i++) {
-        strip.setPixelColor(i, j, j, j);
-      }
-      strip.show();
-      delay(5);
+  for (j = R; j < 255; j++) {
+    for (i = 0; i < strip.numPixels(); i++) {
+      strip.setPixelColor(i, j, j, j);
     }
-    /*delay(1500);*/
+    strip.show();
+    delay(6);
   }
+  //delay(1500);
+}
+
+// 255 to 0
+void darken() {
+  uint16_t i, j;
+
+  for (j = 255; j > R; j--) {
+    for (i = 0; i < strip.numPixels(); i++) {
+      strip.setPixelColor(i, j, j, j);
+    }
+    strip.show();
+    delay(1);
+  }
+  //delay(1500);
+}
 
 void unifiedSensorAPIRead(void)
 
@@ -185,8 +186,8 @@ void unifiedSensorAPIRead(void)
     /* if event.light is +/- 4294967040 there was a float over/underflow */
     for(int i=0; i<NUMPIXELS; i++) { // For each pixel...
 
-    // pixels.Color() takes RGB values, from 0,0,0 up to 255,255,255
-    strip.setPixelColor(i, strip.Color(R, G, B));
+    // pixels.Color() takes RGBW values, from 0,0,0 up to 255,255,255
+    strip.setPixelColor(i, strip.Color(R, G, B, W));
     /*ble.print(event.light);*/
     /*ble.println();*/
     /*Serial.print(event.light); Serial.println(F(" lux RED"));*/

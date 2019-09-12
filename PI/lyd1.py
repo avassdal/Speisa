@@ -22,8 +22,7 @@ async def run(loop):
     print('looking for devices...')
     while device is None:
         devices = await discover()
-        device = next((d for d in devices if d.name == 'Adafruit Bluefruit LE'), None)
-        device2 = next((d for d in devices if d.name == 'SpeisaBT2'), None)
+        device = next((d for d in devices if d.name == 'Lyd1'), None)
 
     async with BleakClient(device.address, loop=loop) as client:
         queue = asyncio.LifoQueue(maxsize=1)
