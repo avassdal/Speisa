@@ -19,10 +19,9 @@
 // Relevante verdier:
 
 #define LIMIT 6000 //triggerpunkt for lyssensor
-#define R 20    //Rødt lys ved mørke
-#define G 20    //Grønt lys ved mørke
-#define B 20    //Blått lys ved mørke
-#define W 20
+#define R 40    //Rødt lys ved mørke
+#define G 40    //Grønt lys ved mørke
+#define B 40    //Blått lys ved mørke
 
 #define RX 100    //Rød lysstyrke ved lys/lyd
 #define GX 100    //Grønn lysstyrke ved lys/lyd
@@ -148,7 +147,7 @@ void brighten() {
   
     for (j = 0; j < 255; j+=2) {
       for (i = 0; i < strip.numPixels(); i++) {
-        strip.setPixelColor(i, j, j, j, j);
+        strip.setPixelColor(i, j, j, j);
       }
       strip.show();
       delay(1);
@@ -161,9 +160,9 @@ void brighten() {
   void darken() {
     uint16_t i, j;
   
-    for (j = 255; j > R; j--) {
+    for (j = 255; j > 40; j--) {
       for (i = 0; i < strip.numPixels(); i++) {
-        strip.setPixelColor(i, j, j, j, j);
+        strip.setPixelColor(i, j, j, j);
       }
       strip.show();
       delay(5);
@@ -187,7 +186,7 @@ void unifiedSensorAPIRead(void)
     for(int i=0; i<NUMPIXELS; i++) { // For each pixel...
 
     // pixels.Color() takes RGB values, from 0,0,0 up to 255,255,255
-    strip.setPixelColor(i, strip.Color(R, G, B, W));
+    strip.setPixelColor(i, strip.Color(R, G, B));
     /*ble.print(event.light);*/
     /*ble.println();*/
     /*Serial.print(event.light); Serial.println(F(" lux RED"));*/

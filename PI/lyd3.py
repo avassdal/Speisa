@@ -13,7 +13,7 @@ characteristicUuid = '6e400003-b5a3-f393-e0a9-e50e24dcca9e'
 pygame.mixer.pre_init(44100, -16, 1, 512)
 pygame.mixer.init()
 pygame.init()
-music=pygame.mixer.Sound("lyd1.ogg")
+music=pygame.mixer.Sound("lyd3.ogg")
 
 
 async def run(loop):
@@ -22,8 +22,7 @@ async def run(loop):
     print('looking for devices...')
     while device is None:
         devices = await discover()
-        device = next((d for d in devices if d.name == 'Adafruit Bluefruit LE'), None)
-        device2 = next((d for d in devices if d.name == 'SpeisaBT2'), None)
+        device = next((d for d in devices if d.name == 'Lyd3'), None)
 
     async with BleakClient(device.address, loop=loop) as client:
         queue = asyncio.LifoQueue(maxsize=1)
