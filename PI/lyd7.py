@@ -1,6 +1,5 @@
 import asyncio
 from datetime import time
-from idlelib import rstrip
 from signal import pause
 from time import sleep
 import pygame
